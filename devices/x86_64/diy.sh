@@ -34,4 +34,22 @@ CONFIG_DRM_I915=y
 ' >> ./target/linux/x86/config-6.1
 
 sed -i "s/enabled '0'/enabled '1'/g" feeds/packages/utils/irqbalance/files/irqbalance.config
+#八、设置Lan口IP为192.168.123.1
+
+sed -i 's/192.168.1.1/192.168.123.1/g' package/base-files/files/bin/config_generate
+
+#九、替换默认主题为 luci-theme-argon
+
+sed -i 's/luci-theme-bootstrap/luci-theme-argon/' feeds/luci/collections/luci/Makefile
+
+#十、修改活动连接数
+
+sed -i 's/16384/65535/g' package/kernel/linux/files/sysctl-nf-conntrack.conf
+
+#十一、修改x86启动等待时间
+
+sed -i 's/default "5"/default "0"/g' config/Config-images.in
+
+#十二、免登录进入ttyd
+sed -i 's|/bin/login|/bin/login -f root|g' feeds/packages/utils/ttyd/files/ttyd.config
 
